@@ -17,15 +17,28 @@ exports.staffList = async (data, { db }) => {
 };
 
 exports.staffAdd = async (data, { db }) => {
-  const doc = { ...data, createTime: db.serverDate() };
+  const { name, phone, role, skills, status } = data;
+  const doc = {
+    name: name || "",
+    phone: phone || "",
+    role: role || "服务员",
+    skills: skills || [],
+    status: status || "在职",
+    createTime: db.serverDate(),
+  };
   const result = await db.collection("staff").add({ data: doc });
   return { success: true, data: { _id: result._id, ...doc } };
 };
 
 exports.staffUpdate = async (data, { db }) => {
-  const { _id, ...rest } = data;
-  rest.updateTime = db.serverDate();
-  await db.collection("staff").doc(_id).update({ data: rest });
+  const { _id, name, phone, role, skills, status } = data;
+  const updateData = { updateTime: db.serverDate() };
+  if (name !== undefined) updateData.name = name;
+  if (phone !== undefined) updateData.phone = phone;
+  if (role !== undefined) updateData.role = role;
+  if (skills !== undefined) updateData.skills = skills;
+  if (status !== undefined) updateData.status = status;
+  await db.collection("staff").doc(_id).update({ data: updateData });
   return { success: true };
 };
 
@@ -41,7 +54,7 @@ exports.staffDelete = async (data, { db }) => {
 
 // --- 排班 ---
 exports.dispatchAdd = async (data, { db, _ }) => {
-  const { staffId, roomId, date, shift, type } = data;
+  const { staffId, roomId, date, timeSlot, shift, type } = data;
 
   // 同人同日已有排班则拒绝
   const existing = await db
@@ -56,6 +69,7 @@ exports.dispatchAdd = async (data, { db, _ }) => {
     staffId,
     roomId,
     date,
+    timeSlot: timeSlot || "",
     shift: shift || "全天",
     type: type || "regular",
     createTime: db.serverDate(),
@@ -77,13 +91,7 @@ exports.dispatchList = async (data, { db }) => {
     .orderBy("date", "asc")
     .get();
 
-  // 过滤掉已删除员工的孤儿记录
-  var staffList = await db.collection("staff").get();
-  var validIds = {};
-  staffList.data.forEach(function (s) { validIds[s._id] = true; });
-  var validDispatches = result.data.filter(function (d) { return validIds[d.staffId]; });
-
-  return { success: true, data: validDispatches };
+  return { success: true, data: result.data };
 };
 
 // 删除单条排班

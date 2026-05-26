@@ -1,4 +1,4 @@
-// 数据库集合初始化
+// 数据库集合初始化（并行创建）
 exports.init = async (data, { db }) => {
   const collections = [
     "rooms",
@@ -13,15 +13,14 @@ exports.init = async (data, { db }) => {
     "revenues",
   ];
 
-  const results = [];
-  for (const name of collections) {
+  const results = await Promise.all(collections.map(async function (name) {
     try {
       await db.createCollection(name);
-      results.push({ name, status: "created" });
+      return { name, status: "created" };
     } catch (e) {
-      results.push({ name, status: "exists" });
+      return { name, status: "exists" };
     }
-  }
+  }));
 
   return { success: true, data: results };
 };

@@ -16,15 +16,26 @@ exports.list = async (data, { db }) => {
 };
 
 exports.add = async (data, { db }) => {
-  const doc = { ...data, createTime: db.serverDate() };
+  const { name, unit, stock, minStock } = data;
+  const doc = {
+    name: name || "",
+    unit: unit || "个",
+    stock: stock || 0,
+    minStock: minStock || 5,
+    createTime: db.serverDate(),
+  };
   const result = await db.collection("materials").add({ data: doc });
   return { success: true, data: { _id: result._id, ...doc } };
 };
 
 exports.update = async (data, { db }) => {
-  const { _id, ...rest } = data;
-  rest.updateTime = db.serverDate();
-  await db.collection("materials").doc(_id).update({ data: rest });
+  const { _id, name, unit, stock, minStock } = data;
+  const updateData = { updateTime: db.serverDate() };
+  if (name !== undefined) updateData.name = name;
+  if (unit !== undefined) updateData.unit = unit;
+  if (stock !== undefined) updateData.stock = stock;
+  if (minStock !== undefined) updateData.minStock = minStock;
+  await db.collection("materials").doc(_id).update({ data: updateData });
   return { success: true };
 };
 

@@ -1,6 +1,6 @@
 // 会议预定模块
 exports.create = async (data, { db }) => {
-  const { roomId, title, date, timeSlot, attendees, company, contact,负责人 } = data;
+  const { roomId, title, date, timeSlot, attendees, company, contact, manager } = data;
 
   // 冲突检测
   const conflict = await db
@@ -24,7 +24,7 @@ exports.create = async (data, { db }) => {
     attendees: attendees || 0,
     company: company || "",
     contact: contact || "",
-    负责人: 负责人 || "",
+    manager: manager || "",
     status: "confirmed",
     createTime: db.serverDate(),
   };
@@ -48,9 +48,18 @@ exports.list = async (data, { db }) => {
 };
 
 exports.update = async (data, { db }) => {
-  const { _id, ...rest } = data;
-  rest.updateTime = db.serverDate();
-  await db.collection("bookings").doc(_id).update({ data: rest });
+  const { _id, roomId, title, date, timeSlot, attendees, company, contact, manager, status } = data;
+  const updateData = { updateTime: db.serverDate() };
+  if (roomId !== undefined) updateData.roomId = roomId;
+  if (title !== undefined) updateData.title = title;
+  if (date !== undefined) updateData.date = date;
+  if (timeSlot !== undefined) updateData.timeSlot = timeSlot;
+  if (attendees !== undefined) updateData.attendees = attendees;
+  if (company !== undefined) updateData.company = company;
+  if (contact !== undefined) updateData.contact = contact;
+  if (manager !== undefined) updateData.manager = manager;
+  if (status !== undefined) updateData.status = status;
+  await db.collection("bookings").doc(_id).update({ data: updateData });
   return { success: true };
 };
 

@@ -18,7 +18,7 @@ Page({
   async loadRooms() {
     var defaultRooms = [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];
     try {
-      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "booking.list" } });
+      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "rooms.list" } });
       var rooms = (res.result && res.result.data) || [];
       if (rooms.length === 0) rooms = defaultRooms;
       this.setData({ roomList: rooms, "form.roomId": rooms[0]._id });

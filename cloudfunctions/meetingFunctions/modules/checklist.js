@@ -34,11 +34,11 @@ exports.createFromTemplate = async (data, { db }) => {
   const checklistResult = await db.collection("checklists").add({ data: checklistDoc });
   const checklistId = checklistResult._id;
 
-  // 创建三个阶段的条目
-  const items = [];
+  // 并行创建三个阶段的条目
+  const itemData = [];
   for (const stage of ["pre", "during", "post"]) {
     for (const tpl of TEMPLATES[stage]) {
-      const item = {
+      itemData.push({
         checklistId,
         content: tpl.content,
         stage: tpl.stage,
@@ -47,11 +47,15 @@ exports.createFromTemplate = async (data, { db }) => {
         hasIssue: false,
         issueDesc: "",
         createTime: db.serverDate(),
-      };
-      const r = await db.collection("checklist_items").add({ data: item });
-      items.push({ _id: r._id, ...item });
+      });
     }
   }
+  const results = await Promise.all(itemData.map(function (item) {
+    return db.collection("checklist_items").add({ data: item });
+  }));
+  const items = results.map(function (r, i) {
+    return { _id: r._id, ...itemData[i] };
+  });
 
   return { success: true, data: { checklist: checklistDoc, _id: checklistId, items } };
 };
@@ -66,6 +70,18 @@ exports.list = async (data, { db }) => {
     .orderBy("createTime", "desc")
     .skip(skip)
     .limit(limit)
+    .get();
+  return { success: true, data: result.data };
+};
+
+exports.items = async (data, { db }) => {
+  const { checklistId } = data || {};
+  const query = {};
+  if (checklistId) query.checklistId = checklistId;
+  const result = await db
+    .collection("checklist_items")
+    .where(query)
+    .orderBy("createTime", "asc")
     .get();
   return { success: true, data: result.data };
 };

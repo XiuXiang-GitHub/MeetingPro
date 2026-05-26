@@ -5,6 +5,7 @@ const _ = db.command;
 
 const modules = {
   dbInit: require("./modules/dbInit"),
+  rooms: require("./modules/rooms"),
   layout: require("./modules/layout"),
   staff: require("./modules/staff"),
   booking: require("./modules/booking"),

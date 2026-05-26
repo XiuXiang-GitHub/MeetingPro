@@ -29,7 +29,7 @@ Page({
   },
   async loadRooms() {
     try {
-      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "booking.list" } });
+      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "rooms.list" } });
       var rooms = (res.result && res.result.data) || [];
       if (rooms.length === 0) {
         rooms = [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];

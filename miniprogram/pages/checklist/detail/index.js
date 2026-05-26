@@ -9,24 +9,16 @@ Page({
     try {
       const [checklistRes, itemsRes] = await Promise.all([
         wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "checklist.list" } }),
-        new Promise((resolve) => {
-          // In real app, query checklist_items by checklistId
-          // Here we simulate with issues query
-          wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "checklist.issues" } }).then(resolve);
-        }),
+        wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "checklist.items", data: { checklistId: id } } }),
       ]);
       const checklist = (checklistRes.result?.data || []).find(c => c._id === id);
-      // Simulate items from the created checklist — in real app, query checklist_items where checklistId
       const stageOrder = { pre: 0, during: 1, post: 2 };
-      const items = await this.loadItems(id);
+      const items = itemsRes.result?.data || [];
       items.sort((a, b) => stageOrder[a.stage] - stageOrder[b.stage]);
       const doneCount = items.filter(function (i) { return i.status === "done"; }).length;
       const donePercent = items.length > 0 ? Math.round(doneCount / items.length * 100) : 0;
       this.setData({ checklist, items, loading: false, issueItems: items.filter(function (i) { return i.hasIssue; }), doneCount, donePercent });
     } catch (e) { this.setData({ loading: false }); }
-  },
-  async loadItems(checklistId) {
-    return [];
   },
   computeProgress() {
     var items = this.data.items;
