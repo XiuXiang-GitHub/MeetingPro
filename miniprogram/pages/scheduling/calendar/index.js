@@ -53,10 +53,7 @@ Page({
         dispatchMap[key].push({ _id: d._id, name: staffLookup[d.staffId] || "已离职", type: d.type });
       });
 
-      var roomRes = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "rooms.list" } });
-      var roomList = (roomRes.result && roomRes.result.data && roomRes.result.data.length > 0)
-        ? roomRes.result.data
-        : [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];
+      var roomList = [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];
       var roomDays = [];
       roomList.forEach(function (room) {
         var dayCells = [];

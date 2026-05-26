@@ -16,31 +16,16 @@ Page({
     }
     var d = new Date();
     var today = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-    this.setData({ "form.date": today });
+    this.setData({ "form.date": today, roomList: [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }], "form.roomId": "main", "form.timeSlot": "08:00-12:00" });
     this.loadStaff();
-    this.loadRooms();
   },
+  onInput(e) { var f = e.currentTarget.dataset.field; this.setData({ ["form." + f]: e.detail.value }); },
   async loadStaff() {
     var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "staff.staffList" } });
     var allStaff = res.result && res.result.data || [];
-    // 过滤掉休假员工，不能排班
     var activeStaff = allStaff.filter(function (s) { return s.status !== "休假"; });
     this.setData({ staffList: activeStaff });
   },
-  async loadRooms() {
-    try {
-      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "rooms.list" } });
-      var rooms = (res.result && res.result.data) || [];
-      if (rooms.length === 0) {
-        rooms = [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];
-      }
-      this.setData({ roomList: rooms, "form.roomId": rooms[0]._id, "form.timeSlot": "08:00-12:00" });
-    } catch (e) {
-      var defaultRooms = [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];
-      this.setData({ roomList: defaultRooms, "form.roomId": defaultRooms[0]._id, "form.timeSlot": "08:00-12:00" });
-    }
-  },
-  onInput(e) { var f = e.currentTarget.dataset.field; this.setData({ ["form." + f]: e.detail.value }); },
   onStaffSelect(e) {
     var idx = e.detail.value;
     var s = this.data.staffList[idx];

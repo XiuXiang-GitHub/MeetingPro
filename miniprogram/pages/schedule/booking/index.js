@@ -12,19 +12,8 @@ Page({
     var m = d.getMonth() + 1;
     var day = d.getDate();
     var today = d.getFullYear() + "-" + (m < 10 ? "0" + m : "" + m) + "-" + (day < 10 ? "0" + day : "" + day);
-    this.setData({ "form.date": today, "form.timeSlot": "08:00-10:00" });
-    this.loadRooms();
-  },
-  async loadRooms() {
     var defaultRooms = [{ _id: "main", name: "主会场" }, { _id: "vip", name: "贵宾厅" }];
-    try {
-      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "rooms.list" } });
-      var rooms = (res.result && res.result.data) || [];
-      if (rooms.length === 0) rooms = defaultRooms;
-      this.setData({ roomList: rooms, "form.roomId": rooms[0]._id });
-    } catch (e) {
-      this.setData({ roomList: defaultRooms, "form.roomId": defaultRooms[0]._id });
-    }
+    this.setData({ "form.date": today, "form.timeSlot": "08:00-10:00", roomList: defaultRooms, "form.roomId": defaultRooms[0]._id });
   },
   onInput(e) { var f = e.currentTarget.dataset.field; this.setData({ ["form." + f]: e.detail.value }); },
   onRoomSelect(e) {
