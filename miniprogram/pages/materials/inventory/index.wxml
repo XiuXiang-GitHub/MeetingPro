@@ -1,0 +1,49 @@
+<!-- 物资库存台账 -->
+<view class="page">
+  <view class="search-bar"><input class="input-field" value="{{keyword}}" bindinput="onSearch" bindconfirm="onSearchConfirm" placeholder="搜索物资..." /></view>
+
+  <view wx:if="{{loading}}" class="empty-state"><view class="empty-state-text">加载中...</view></view>
+  <view wx:elif="{{list.length === 0}}" class="empty-state"><view class="empty-state-icon">📦</view><view class="empty-state-text">暂无物资记录</view></view>
+  <block wx:else>
+    <view class="card {{item.stock < item.minStock ? 'low-stock' : ''}}" wx:for="{{list}}" wx:key="_id">
+      <view class="flex-between">
+        <view class="flex-col flex-1"><text class="mat-name">{{item.name}}</text><text class="mat-unit">{{item.unit || '件'}} · 当前库存: {{item.stock}} · 最低: {{item.minStock}}</text></view>
+        <text class="tag {{item.stock < item.minStock ? 'tag-danger' : 'tag-success'}}">{{item.stock < item.minStock ? '预警' : '正常'}}</text>
+      </view>
+      <view class="mat-actions">
+        <button class="btn btn-secondary btn-sm" bindtap="onLend" data-item="{{item}}">领用</button>
+        <button class="btn btn-ghost btn-sm" bindtap="onReturn" data-item="{{item}}">归还</button>
+      </view>
+    </view>
+  </block>
+  <view class="bottom-btn"><button class="btn btn-ghost" bindtap="onRecords">查看领用归还记录 ›</button></view>
+
+  <!-- 领用弹窗 -->
+  <view wx:if="{{showLend}}" class="modal-mask" catchtap="onCloseLend">
+    <view class="modal-sheet" catchtap="">
+      <view class="modal-handle"></view>
+      <text class="modal-title">领用 - {{currentItem.name}}</text>
+      <view class="form-group"><text class="form-label">数量</text><input class="input-field" type="number" value="{{lendForm.qty}}" bindinput="onLendInput" data-field="qty" /></view>
+      <view class="form-group"><text class="form-label">领用人</text><input class="input-field" value="{{lendForm.person}}" bindinput="onLendInput" data-field="person" /></view>
+      <view class="form-group">
+        <text class="form-label">关联会议 (可选)</text>
+        <picker wx:if="{{bookingList.length > 0}}" value="{{bookingIndex}}" range="{{bookingList}}" range-key="title" bindchange="onBookingSelect">
+          <view class="input-field flex-row">{{bookingList[bookingIndex].title || '请选择会议'}}</view>
+        </picker>
+        <view wx:else class="input-field" style="color:#999999">暂无会议</view>
+      </view>
+      <button class="btn btn-primary" bindtap="submitLend">确认领用</button>
+    </view>
+  </view>
+
+  <!-- 归还弹窗 -->
+  <view wx:if="{{showReturn}}" class="modal-mask" catchtap="onCloseReturn">
+    <view class="modal-sheet" catchtap="">
+      <view class="modal-handle"></view>
+      <text class="modal-title">归还 - {{currentItem.name}}</text>
+      <view class="form-group"><text class="form-label">数量</text><input class="input-field" type="number" value="{{returnForm.qty}}" bindinput="onReturnInput" data-field="qty" /></view>
+      <view class="form-group"><text class="form-label">归还人</text><input class="input-field" value="{{returnForm.person}}" bindinput="onReturnInput" data-field="person" /></view>
+      <button class="btn btn-primary" bindtap="submitReturn">确认归还</button>
+    </view>
+  </view>
+</view>

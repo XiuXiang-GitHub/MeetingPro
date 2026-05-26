@@ -1,0 +1,32 @@
+<!-- 员工列表 -->
+<view class="page">
+  <!-- 角色筛选 -->
+  <scroll-view scroll-x class="filter-bar">
+    <text
+      wx:for="{{roles}}" wx:key="*this"
+      class="filter-tag {{activeRole === item ? 'active' : ''}}"
+      bindtap="onRoleChange" data-role="{{item}}"
+    >{{item}}</text>
+  </scroll-view>
+
+  <view wx:if="{{loading}}" class="empty-state"><view class="empty-state-text">加载中...</view></view>
+  <view wx:elif="{{list.length === 0}}" class="empty-state">
+    <view class="empty-state-icon">👥</view>
+    <view class="empty-state-text">暂无员工记录</view>
+  </view>
+  <block wx:else>
+    <view class="card" wx:for="{{list}}" wx:key="_id" bindtap="onSelectStaff" bindlongpress="onDeleteStaff" data-item="{{item}}">
+      <view class="flex-between">
+        <view class="flex-col flex-1">
+          <text class="staff-name">{{item.name}}</text>
+          <text class="staff-meta">{{item.role}} · {{item.phone || '无电话'}}</text>
+        </view>
+        <text class="tag {{item.statusTagClass || 'tag-success'}}">{{item.status || '在职'}}</text>
+      </view>
+      <view wx:if="{{item.skills && item.skills.length}}" class="skills">
+        <text class="tag tag-info" wx:for="{{item.skills}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+  </block>
+  <view class="fab" bindtap="onAdd">+</view>
+</view>

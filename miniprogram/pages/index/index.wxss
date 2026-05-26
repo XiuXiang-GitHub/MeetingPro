@@ -1,0 +1,168 @@
+/* 首页 — Botanical Calm */
+
+.page { padding: 0; padding-bottom: 140rpx; }
+
+/* ===== 英雄区 ===== */
+.hero {
+  position: relative;
+  padding: 44rpx 28rpx 36rpx;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -100rpx; left: -80rpx; right: -80rpx; bottom: 0;
+  background: linear-gradient(160deg, #F6F5F1 0%, #FAF9F6 45%, #FFFFFF 100%);
+  z-index: -1;
+}
+
+.hero-date {
+  font-size: 24rpx; color: #9EA395; display: block;
+  letter-spacing: 1rpx;
+}
+.hero-title {
+  font-size: 42rpx; font-weight: 300; color: #2C3328;
+  margin-top: 4rpx; letter-spacing: -1rpx; line-height: 1.2;
+}
+
+/* 指标行 */
+.hero-stats {
+  display: flex; gap: 14rpx; margin: 32rpx 0 0;
+}
+.hero-stat-card {
+  flex: 1; background: #FFFFFF;
+  border-radius: 16rpx; padding: 24rpx 20rpx;
+  box-shadow: 0 1rpx 4rpx rgba(44,51,40,0.04);
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+.hero-stat-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 3rpx;
+  background: #8C9E7A;
+}
+.hero-stat-num {
+  font-size: 52rpx; font-weight: 300; color: #8C9E7A;
+  line-height: 1; letter-spacing: -2rpx;
+}
+.hero-stat-label {
+  font-size: 22rpx; color: #9EA395; margin-top: 10rpx;
+  font-weight: 500;
+}
+
+/* ===== 区块通用 ===== */
+.section { margin-bottom: 4rpx; }
+.section-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 22rpx 28rpx 14rpx;
+}
+.section-title {
+  font-size: 26rpx; font-weight: 700; color: #2C3328;
+  letter-spacing: -0.2rpx;
+  text-transform: uppercase;
+}
+.section-link { font-size: 24rpx; color: #8C9E7A; font-weight: 500; }
+
+/* ===== 紧急警告条 ===== */
+.alert-strip {
+  margin: 0 24rpx 14rpx;
+  background: #FBF0EE;
+  border: 1rpx solid #F0D4D0;
+  border-radius: 14rpx;
+  padding: 18rpx 24rpx;
+  display: flex; align-items: center; gap: 12rpx;
+}
+.alert-strip-dot {
+  width: 10rpx; height: 10rpx; border-radius: 50%;
+  background: #C5655E; flex-shrink: 0;
+  animation: breathe 2s ease-in-out infinite;
+}
+.alert-strip-text { font-size: 24rpx; color: #A0453F; font-weight: 600; flex: 1; }
+
+/* ===== 会议卡片 ===== */
+.booking-item {
+  display: flex; align-items: center; gap: 16rpx;
+}
+.booking-time-col {
+  display: flex; flex-direction: column; align-items: center;
+  background: #F6F5F1; border-radius: 12rpx;
+  padding: 12rpx 16rpx; min-width: 88rpx;
+}
+.booking-time {
+  font-size: 28rpx; font-weight: 600; color: #6B7D5C;
+  line-height: 1;
+}
+.booking-period {
+  font-size: 18rpx; color: #9EA395; margin-top: 4rpx;
+}
+.booking-info-col { flex: 1; }
+.booking-title { font-size: 28rpx; font-weight: 600; color: #2C3328; display: block; }
+.booking-meta { font-size: 22rpx; color: #6B7265; margin-top: 4rpx; display: block; }
+
+/* ===== 排班卡 ===== */
+.dispatch-stat-card {
+  display: flex; align-items: center; gap: 20rpx;
+}
+.dispatch-num-wrap {
+  width: 100rpx; height: 100rpx; border-radius: 20rpx;
+  background: #F2F4ED;
+  display: flex; align-items: center; justify-content: center;
+}
+.dispatch-num {
+  font-size: 44rpx; font-weight: 300; color: #6B7D5C;
+  line-height: 1;
+}
+.dispatch-detail { flex: 1; }
+.dispatch-label { font-size: 26rpx; font-weight: 600; color: #2C3328; }
+.dispatch-sub { font-size: 22rpx; color: #6B7265; margin-top: 4rpx; display: block; }
+
+/* ===== 库存预警 ===== */
+.lowstock-title-row { display: flex; align-items: center; gap: 12rpx; }
+.lowstock-indicator {
+  width: 10rpx; height: 10rpx; border-radius: 50%;
+  background: #C5655E; flex-shrink: 0;
+  animation: breathe 1.4s ease-in-out infinite;
+}
+.lowstock-name { font-size: 28rpx; font-weight: 600; color: #2C3328; }
+.lowstock-stock { font-size: 24rpx; font-weight: 700; color: #C5655E; }
+
+/* ===== 收入卡 ===== */
+.revenue-card {
+  display: flex; align-items: center; gap: 20rpx;
+}
+.revenue-icon-wrap {
+  width: 100rpx; height: 100rpx; border-radius: 20rpx;
+  background: #F2F4ED;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40rpx;
+}
+.revenue-num {
+  font-size: 44rpx; font-weight: 300; color: #2C3328;
+  line-height: 1; letter-spacing: -1rpx;
+}
+.revenue-label { font-size: 22rpx; color: #6B7265; margin-top: 4rpx; display: block; }
+
+/* ===== 快捷操作网格 ===== */
+.quick-section { padding: 8rpx 16rpx 0; }
+.quick-grid { display: flex; flex-wrap: wrap; }
+.quick-item {
+  width: calc(50% - 16rpx); margin: 0 8rpx 16rpx;
+  background: #FFFFFF; border-radius: 16rpx;
+  padding: 28rpx 20rpx;
+  display: flex; align-items: center; gap: 16rpx;
+  box-sizing: border-box;
+  box-shadow: 0 1rpx 4rpx rgba(44,51,40,0.04);
+  transition: transform 140ms ease;
+}
+.quick-item:active { transform: scale(0.97); }
+.quick-icon-wrap {
+  width: 72rpx; height: 72rpx; border-radius: 16rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36rpx; flex-shrink: 0;
+}
+.quick-icon-wrap.sage  { background: #F2F4ED; }
+.quick-icon-wrap.green { background: #EDF4EE; }
+.quick-icon-wrap.amber { background: #FCF6ED; }
+.quick-icon-wrap.slate { background: #F3F2EE; }
+.quick-label { font-size: 26rpx; font-weight: 600; color: #2C3328; display: block; }
+.quick-desc  { font-size: 20rpx; color: #9EA395; margin-top: 2rpx; display: block; }

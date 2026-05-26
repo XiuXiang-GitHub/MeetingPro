@@ -1,0 +1,4 @@
+/* 执行清单列表 */
+.cl-title { font-size: 28rpx; font-weight: 600; color: #1A1A1A; }
+.cl-meta { font-size: 24rpx; color: #6B7265; margin-top: 6rpx; }
+.arrow { font-size: 36rpx; color: #9EA395; }

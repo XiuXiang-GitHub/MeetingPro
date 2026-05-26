@@ -1,0 +1,9 @@
+{
+  "name": "meetingFunctions",
+  "version": "1.0.0",
+  "description": "酒店会议管理云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.4.0"
+  }
+}

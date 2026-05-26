@@ -1,0 +1,153 @@
+<!-- 首页仪表盘 — Warm Editorial -->
+<view class="page">
+  <view wx:if="{{loading}}" class="empty-state">
+    <view class="empty-state-icon">☕</view>
+    <view class="empty-state-text">正在加载...</view>
+  </view>
+
+  <block wx:else>
+    <!-- 英雄区 -->
+    <view class="hero">
+      <text class="hero-date">{{currentDate}}</text>
+      <text class="hero-title">会议管理中心</text>
+      <view class="hero-stats">
+        <view class="hero-stat-card anim-popin">
+          <text class="hero-stat-num">{{todayBookings.length}}</text>
+          <text class="hero-stat-label">今日会议</text>
+        </view>
+        <view class="hero-stat-card anim-popin anim-d1">
+          <text class="hero-stat-num">{{todayDispatches.length}}</text>
+          <text class="hero-stat-label">已排班人员</text>
+        </view>
+        <view class="hero-stat-card anim-popin anim-d2">
+          <text class="hero-stat-num">{{lowStockItems.length}}</text>
+          <text class="hero-stat-label">物资预警</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 紧急倒计时 -->
+    <view wx:if="{{urgentBookings.length > 0}}" class="alert-strip anim-fadeup">
+      <view class="alert-strip-dot"></view>
+      <text class="alert-strip-text">{{urgentBookings.length}} 场会议即将在2小时内开始</text>
+    </view>
+
+    <!-- 今日会议 -->
+    <view class="section anim-fadeup anim-d1">
+      <view class="section-header">
+        <text class="section-title">今日会议</text>
+        <text class="section-link" bindtap="goTo" data-url="/pages/schedule/calendar/index">查看全部 ›</text>
+      </view>
+      <view wx:if="{{todayBookings.length === 0}}" class="empty-state" style="padding:48rpx">
+        <view class="empty-state-text">今日暂无会议安排</view>
+      </view>
+      <block wx:else>
+        <view class="card" wx:for="{{todayBookings}}" wx:key="_id" wx:for-item="item" wx:for-index="i" style="animation:fadeUp 360ms {{i * 60 + 120}}ms ease-out both">
+          <view class="booking-item">
+            <view class="booking-time-col">
+              <text class="booking-time">{{item.timeSlot}}</text>
+            </view>
+            <view class="booking-info-col">
+              <text class="booking-title">{{item.title}}</text>
+              <text class="booking-meta">{{item.company || '未关联客户'}} · {{item.attendees}}人</text>
+            </view>
+            <text class="tag {{item.timeLeft < 2 ? 'tag-danger' : 'tag-info'}}">{{item.room || ''}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 今日排班 -->
+    <view class="section anim-fadeup anim-d2">
+      <view class="section-header">
+        <text class="section-title">今日排班</text>
+        <text class="section-link" bindtap="switchTab" data-url="/pages/scheduling/calendar/index">查看调度 ›</text>
+      </view>
+      <view wx:if="{{todayDispatches.length === 0}}" class="empty-state" style="padding:48rpx">
+        <view class="empty-state-text">今日暂无排班记录</view>
+      </view>
+      <view wx:else class="card">
+        <view class="dispatch-stat-card">
+          <view class="dispatch-num-wrap">
+            <text class="dispatch-num">{{todayDispatches.length}}</text>
+          </view>
+          <view class="dispatch-detail">
+            <text class="dispatch-label">人员已就位</text>
+            <text class="dispatch-sub">覆盖 {{todayDispatches.length}} 个班次</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 库存预警 -->
+    <view wx:if="{{lowStockItems.length > 0}}" class="section anim-fadeup anim-d3">
+      <view class="section-header">
+        <text class="section-title">库存预警</text>
+        <text class="section-link" bindtap="goTo" data-url="/pages/materials/inventory/index">处理 ›</text>
+      </view>
+      <view class="card" wx:for="{{lowStockItems}}" wx:key="_id">
+        <view class="flex-between">
+          <view class="lowstock-title-row">
+            <view class="lowstock-indicator"></view>
+            <text class="lowstock-name">{{item.name}}</text>
+          </view>
+          <text class="tag tag-danger">{{item.stock}} / {{item.minStock}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 月度收入 -->
+    <view class="section anim-fadeup anim-d3">
+      <view class="section-header">
+        <text class="section-title">本月收入</text>
+        <text class="section-link" bindtap="goTo" data-url="/pages/report/index/index">查看报表 ›</text>
+      </view>
+      <view class="card">
+        <view class="revenue-card">
+          <view class="revenue-icon-wrap">💰</view>
+          <view class="dispatch-detail">
+            <text class="revenue-num">¥{{monthlyRevenue}}</text>
+            <text class="revenue-label">本月累计收入</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 快捷操作 -->
+    <view class="quick-section anim-fadeup anim-d4">
+      <view class="section-header">
+        <text class="section-title">快捷功能</text>
+      </view>
+      <view class="quick-grid">
+        <view class="quick-item" bindtap="goTo" data-url="/pages/schedule/calendar/index">
+          <view class="quick-icon-wrap sage">📅</view>
+          <view class="flex-col flex-1">
+            <text class="quick-label">会议档期</text>
+            <text class="quick-desc">预定与管理</text>
+          </view>
+        </view>
+        <view class="quick-item" bindtap="switchTab" data-url="/pages/scheduling/calendar/index">
+          <view class="quick-icon-wrap green">👥</view>
+          <view class="flex-col flex-1">
+            <text class="quick-label">人员调度</text>
+            <text class="quick-desc">排班与借调</text>
+          </view>
+        </view>
+        <view class="quick-item" bindtap="goTo" data-url="/pages/materials/inventory/index">
+          <view class="quick-icon-wrap amber">📦</view>
+          <view class="flex-col flex-1">
+            <text class="quick-label">物资管理</text>
+            <text class="quick-desc">库存与领用</text>
+          </view>
+        </view>
+        <view class="quick-item" bindtap="goTo" data-url="/pages/report/index/index">
+          <view class="quick-icon-wrap slate">📊</view>
+          <view class="flex-col flex-1">
+            <text class="quick-label">数据报表</text>
+            <text class="quick-desc">效率与收入</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

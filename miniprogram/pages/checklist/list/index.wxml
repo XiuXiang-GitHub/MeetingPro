@@ -1,0 +1,18 @@
+<!-- 执行清单列表 -->
+<view class="page">
+  <view wx:if="{{loading}}" class="empty-state"><view class="empty-state-text">加载中...</view></view>
+  <view wx:elif="{{list.length === 0}}" class="empty-state">
+    <view class="empty-state-icon">✅</view>
+    <view class="empty-state-text">暂无执行清单</view>
+    <text style="font-size:24rpx;color:#999999;margin-top:8rpx">点击下方按钮创建标准化清单</text>
+  </view>
+  <block wx:else>
+    <view class="card" wx:for="{{list}}" wx:key="_id" bindtap="onViewDetail" data-id="{{item._id}}">
+      <view class="flex-between">
+        <view class="flex-col flex-1"><text class="cl-title">{{item.title}}</text><text class="cl-meta">{{item.createTime || ''}}</text></view>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </block>
+  <view style="padding:32rpx"><button class="btn btn-primary" bindtap="onCreate">从模板创建清单</button></view>
+</view>

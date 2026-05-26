@@ -1,0 +1,310 @@
+/* === MeetingPro — Botanical Calm 设计系统 ===
+   灵感：Aesop 门店 · 高端水疗 · 鼠尾草与奶油
+   原则：低饱和，高呼吸感，克制中传递品质 */
+
+page {
+  height: 100%;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.7;
+  color: #2C3328;
+  background: #FAF9F6;
+  box-sizing: border-box;
+}
+
+button {
+  background: initial;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+button:focus { outline: 0; }
+button::after { border: none; }
+
+/* ============================================
+   色彩系统 — Botanical Calm
+   ============================================ */
+
+/* 主色调 — 鼠尾草绿 */
+.c-primary    { color: #8C9E7A; }
+.bg-primary   { background: #8C9E7A; }
+.c-primary-l  { color: #A8B89A; }
+.c-primary-d  { color: #6B7D5C; }
+
+/* 深色 — 森林夜 */
+.c-deep       { color: #2C3328; }
+.bg-deep      { background: #2C3328; }
+
+/* 语义色 — 陶土暖调 */
+.c-success    { color: #5C9A6F; }
+.bg-success   { background: #5C9A6F; }
+.c-warning    { color: #E09E4A; }
+.bg-warning   { background: #E09E4A; }
+.c-danger     { color: #C5655E; }
+.bg-danger    { background: #C5655E; }
+
+/* 文本层级 */
+.c-text       { color: #2C3328; }
+.c-text-2     { color: #6B7265; }
+.c-text-3     { color: #9EA395; }
+.c-text-4     { color: #C5C9BE; }
+
+/* ============================================
+   动画系统 — 呼吸般自然
+   ============================================ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-24rpx); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+@keyframes unfurl {
+  from { opacity: 0; max-height: 0; }
+  to   { opacity: 1; max-height: 400rpx; }
+}
+
+.anim-fadeup    { animation: fadeUp 450ms ease-out both; }
+.anim-popin     { animation: popIn 380ms ease-out both; }
+.anim-slideleft { animation: slideLeft 380ms ease-out both; }
+.anim-d1  { animation-delay: 50ms; }
+.anim-d2  { animation-delay: 100ms; }
+.anim-d3  { animation-delay: 150ms; }
+.anim-d4  { animation-delay: 200ms; }
+.anim-d5  { animation-delay: 260ms; }
+.anim-d6  { animation-delay: 320ms; }
+
+/* ============================================
+   卡片系统 — 柔光质感
+   ============================================ */
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 14rpx;
+  box-shadow: 0 1rpx 4rpx rgba(44,51,40,0.04), 0 4rpx 12rpx rgba(44,51,40,0.02);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.card:active { transform: scale(0.988); box-shadow: 0 1rpx 3rpx rgba(44,51,40,0.03); }
+
+.card-flat {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 14rpx;
+  border: 1rpx solid #E8E5DF;
+}
+
+.card-highlight {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 14rpx;
+  box-shadow: 0 4rpx 16rpx rgba(140,158,122,0.08);
+  border-left: 6rpx solid #8C9E7A;
+}
+
+.card-accent {
+  background: #F6F5F1;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 14rpx;
+}
+
+/* ============================================
+   标签系统
+   ============================================ */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 4rpx 14rpx; border-radius: 6rpx;
+  font-size: 22rpx; font-weight: 600;
+  line-height: 1.5; letter-spacing: 0.3rpx;
+}
+.tag-sage   { background: #F2F4ED; color: #6B7D5C; }
+.tag-green  { background: #EDF4EE; color: #4A7A59; }
+.tag-amber  { background: #FCF6ED; color: #B87A2E; }
+.tag-red    { background: #FBF0EE; color: #B5554F; }
+.tag-slate  { background: #F3F2EE; color: #6B7265; }
+
+.tag-info    { background: #F2F4ED; color: #6B7D5C; }
+.tag-warn    { background: #FCF6ED; color: #B87A2E; }
+.tag-danger  { background: #FBF0EE; color: #B5554F; }
+.tag-success { background: #EDF4EE; color: #4A7A59; }
+.tag-neutral { background: #F3F2EE; color: #6B7265; }
+
+/* ============================================
+   按钮系统 — 圆润克制
+   ============================================ */
+.btn {
+  display: flex; align-items: center; justify-content: center;
+  height: 88rpx; border-radius: 14rpx;
+  font-size: 28rpx; font-weight: 600;
+  transition: opacity 140ms, transform 140ms;
+  box-sizing: border-box; letter-spacing: 0.3rpx;
+}
+.btn:active { opacity: 0.88; transform: scale(0.975); }
+
+.btn-primary {
+  background: #8C9E7A; color: #FFFFFF;
+  box-shadow: 0 4rpx 16rpx rgba(140,158,122,0.30);
+}
+.btn-secondary {
+  background: #F3F2EE; color: #2C3328;
+}
+.btn-outline {
+  background: #FFFFFF; color: #6B7D5C;
+  border: 1.5rpx solid #8C9E7A;
+}
+.btn-danger {
+  background: #C5655E; color: #FFFFFF;
+}
+.btn-ghost {
+  background: transparent; color: #6B7D5C;
+}
+.btn-sm {
+  height: 64rpx; padding: 0 24rpx; font-size: 24rpx; border-radius: 12rpx;
+}
+.btn-xs {
+  height: 52rpx; padding: 0 16rpx; font-size: 22rpx; border-radius: 10rpx;
+}
+
+/* ============================================
+   空状态
+   ============================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 32rpx;
+}
+.empty-state-icon {
+  width: 120rpx; height: 120rpx;
+  border: 2rpx dashed #D5D7CD;
+  border-radius: 24rpx;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24rpx; font-size: 48rpx;
+}
+.empty-state-text { font-size: 26rpx; color: #9EA395; text-align: center; }
+
+/* ============================================
+   表单组件
+   ============================================ */
+.form-group {
+  padding: 20rpx 32rpx;
+  border-bottom: 1rpx solid #F3F2EE;
+}
+.form-label {
+  display: block; font-size: 24rpx; color: #6B7265;
+  margin-bottom: 12rpx; font-weight: 600;
+}
+.input-field {
+  width: 100%; height: 80rpx;
+  background: #FAF9F6; border: 1rpx solid #E8E5DF;
+  border-radius: 14rpx; padding: 0 20rpx;
+  font-size: 28rpx; box-sizing: border-box;
+  display: flex; align-items: center;
+  color: #2C3328;
+  transition: border-color 180ms, box-shadow 180ms;
+}
+.input-field:focus { border-color: #8C9E7A; box-shadow: 0 0 0 4rpx rgba(140,158,122,0.10); }
+
+/* ============================================
+   弹窗
+   ============================================ */
+.modal-mask {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,51,40,0.55); z-index: 1000;
+  display: flex; align-items: flex-end; justify-content: center;
+  animation: fadeIn 200ms ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-sheet {
+  background: #FFFFFF; border-radius: 24rpx 24rpx 0 0;
+  width: 100%; padding: 32rpx; padding-top: 16rpx;
+  animation: fadeUp 320ms ease-out both;
+}
+.modal-handle {
+  width: 56rpx; height: 5rpx; background: #D5D7CD;
+  border-radius: 3rpx; margin: 0 auto 24rpx;
+}
+
+/* ============================================
+   分隔线
+   ============================================ */
+.divider { height: 1rpx; background: #E8E5DF; margin: 0 32rpx; }
+.divider-subtle { height: 1rpx; background: linear-gradient(90deg, transparent, #E8E5DF 20%, #E8E5DF 80%, transparent); margin: 0 32rpx; }
+.section-gap { height: 16rpx; }
+
+/* ============================================
+   布局工具
+   ============================================ */
+.flex-row    { display: flex; flex-direction: row; align-items: center; }
+.flex-col    { display: flex; flex-direction: column; }
+.flex-1      { flex: 1; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-wrap   { flex-wrap: wrap; }
+.gap-8       { gap: 8rpx; }
+.gap-12      { gap: 12rpx; }
+.gap-16      { gap: 16rpx; }
+
+/* ============================================
+   页面容器
+   ============================================ */
+.page {
+  padding: 16rpx 0;
+  padding-bottom: 140rpx;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+.page-title {
+  font-size: 34rpx; font-weight: 700;
+  color: #2C3328; letter-spacing: -0.3rpx;
+  padding: 8rpx 32rpx 16rpx;
+}
+
+/* ============================================
+   浮动操作按钮
+   ============================================ */
+.fab {
+  position: fixed; bottom: 140rpx; right: 32rpx;
+  width: 96rpx; height: 96rpx;
+  background: #8C9E7A; color: #FFFFFF;
+  border-radius: 28rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44rpx;
+  box-shadow: 0 8rpx 24rpx rgba(140,158,122,0.35);
+  z-index: 100;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.fab:active { opacity: 0.88; transform: scale(0.93); }
+
+/* ============================================
+   底部安全区
+   ============================================ */
+.safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 140rpx); }
+
+/* ============================================
+   装饰元素
+   ============================================ */
+.accent-bar {
+  width: 40rpx; height: 4rpx;
+  background: #8C9E7A;
+  border-radius: 2rpx; margin-bottom: 16rpx;
+}

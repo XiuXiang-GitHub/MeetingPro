@@ -1,0 +1,42 @@
+<!-- 清单详情 -->
+<view class="page">
+  <view wx:if="{{loading}}" class="empty-state"><view class="empty-state-text">加载中...</view></view>
+  <block wx:elif="{{checklist}}">
+    <view class="header card">
+      <text class="cl-title">{{checklist.title}}</text>
+      <view class="progress-bar"><view class="progress-fill" style="width:{{donePercent}}%"></view></view>
+      <text class="progress-text">已完成 {{doneCount}}/{{items.length}}</text>
+    </view>
+
+    <!-- 问题汇总入口 -->
+    <view wx:if="{{issueItems.length > 0}}" class="issue-alert" bindtap="toggleIssues">
+      <text>⚠ {{issueItems.length}}个问题标记 {{showIssues ? '▲' : '▼'}}</text>
+    </view>
+    <view wx:if="{{showIssues}}" class="card">
+      <view wx:for="{{issueItems}}" wx:key="_id" class="issue-item">
+        <text class="issue-content">{{item.content}}</text>
+        <text class="issue-desc">{{item.issueDesc}}</text>
+      </view>
+    </view>
+
+    <!-- 按阶段分组 -->
+    <block wx:for="{{stages}}" wx:key="*this" wx:for-item="stage">
+      <view class="stage-section card">
+        <text class="stage-title">{{stageLabels[stage]}}</text>
+        <block wx:for="{{items}}" wx:for-item="item" wx:key="_id">
+          <view wx:if="{{item.stage === stage}}" class="task-item">
+            <view class="flex-row" style="gap:16rpx;flex:1">
+              <view class="checkbox {{item.status === 'done' ? 'checked' : ''}}" bindtap="onToggle" data-item="{{item}}">
+                <text wx:if="{{item.status === 'done'}}">✓</text>
+              </view>
+              <text class="task-content {{item.status === 'done' ? 'done' : ''}}">{{item.content}}</text>
+            </view>
+            <text wx:if="{{item.hasIssue}}" class="tag tag-warn">有问题</text>
+            <button wx:else class="btn btn-ghost btn-sm" bindtap="onMarkIssue" data-item="{{item}}">标记</button>
+          </view>
+        </block>
+      </view>
+    </block>
+  </block>
+  <view wx:else class="empty-state"><view class="empty-state-text">清单不存在</view></view>
+</view>

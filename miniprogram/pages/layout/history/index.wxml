@@ -1,0 +1,29 @@
+<!-- 历史方案列表 -->
+<view class="page">
+  <view wx:if="{{loading && list.length === 0}}" class="empty-state">
+    <view class="empty-state-text">加载中...</view>
+  </view>
+  <view wx:elif="{{list.length === 0}}" class="empty-state">
+    <view class="empty-state-icon">📐</view>
+    <view class="empty-state-text">暂无保存的方案</view>
+    <text style="font-size:24rpx;color:#999999;margin-top:8rpx">在摆台编辑器中保存方案后将在此展示</text>
+  </view>
+  <block wx:else>
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="flex-between" bindtap="onLoadLayout" data-item="{{item}}">
+        <view class="flex-col flex-1">
+          <text class="layout-name">{{item.name}}</text>
+          <text class="layout-meta">{{item.furniture.length}}件家具 · 模板:{{item.template || '自定义'}}</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+      <view class="layout-actions">
+        <text class="tag tag-neutral">{{item.createTime || ''}}</text>
+        <button class="btn btn-ghost btn-sm" catchtap="onDelete" data-item="{{item}}">删除</button>
+      </view>
+    </view>
+    <view wx:if="{{hasMore}}" class="load-more" bindtap="loadMore">
+      <text>加载更多...</text>
+    </view>
+  </block>
+</view>

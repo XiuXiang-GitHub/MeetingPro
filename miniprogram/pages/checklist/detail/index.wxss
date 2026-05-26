@@ -1,0 +1,51 @@
+/* 执行清单详情 */
+.page { padding: 0; padding-bottom: 80rpx; }
+
+.header { padding: 28rpx 28rpx; margin-bottom: 8rpx; }
+.cl-title { font-size: 34rpx; font-weight: 800; color: #2C3328; display: block; letter-spacing: -0.5rpx; }
+
+/* 进度条 */
+.progress-bar { height: 8rpx; background: #E8E5DF; border-radius: 4rpx; margin: 16rpx 0; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #07C160, #05A04A); border-radius: 4rpx; }
+.progress-text { font-size: 24rpx; color: #6B7265; font-weight: 500; }
+
+/* 问题警告 */
+.issue-alert {
+  margin: 0 24rpx 20rpx; padding: 16rpx 20rpx;
+  background: #FFF4E5; border-radius: 16rpx;
+  font-size: 24rpx; color: #CC7A00; font-weight: 500;
+}
+.issue-item { padding: 16rpx 0; border-bottom: 1rpx solid #F3F2EE; }
+.issue-content { font-size: 28rpx; color: #1A1A1A; }
+.issue-desc { font-size: 24rpx; color: #6B7265; display: block; margin-top: 6rpx; }
+
+/* 阶段 */
+.stage-section { margin-bottom: 8rpx; }
+.stage-title {
+  font-size: 26rpx; font-weight: 700; color: #8C9E7A;
+  display: flex; align-items: center; gap: 8rpx;
+  padding: 20rpx 28rpx 12rpx;
+  border-bottom: 1rpx solid #E8E5DF;
+}
+.stage-title::before {
+  content: '';
+  display: inline-block;
+  width: 6rpx; height: 20rpx; border-radius: 3rpx;
+  background: linear-gradient(180deg, #A8B89A, #8C9E7A);
+}
+
+/* 任务项 */
+.task-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18rpx 28rpx; border-bottom: 1rpx solid #F3F2EE;
+  gap: 14rpx;
+}
+.checkbox {
+  width: 40rpx; height: 40rpx; border: 2rpx solid #C5C9BE;
+  border-radius: 10rpx; display: flex; align-items: center; justify-content: center;
+  font-size: 24rpx; color: #FFFFFF; flex-shrink: 0;
+  transition: all 160ms ease;
+}
+.checkbox.checked { background: #07C160; border-color: #07C160; }
+.task-content { font-size: 28rpx; color: #1A1A1A; flex: 1; }
+.task-content.done { text-decoration: line-through; color: #C5C9BE; }

@@ -1,0 +1,14 @@
+<!-- 领用归还记录 -->
+<view class="page">
+  <view wx:if="{{loading}}" class="empty-state"><view class="empty-state-text">加载中...</view></view>
+  <view wx:elif="{{list.length === 0}}" class="empty-state"><view class="empty-state-icon">📋</view><view class="empty-state-text">暂无领用归还记录</view></view>
+  <block wx:else>
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="flex-between">
+        <text class="log-label">{{item.type === 'lend' ? '领用' : '归还'}}</text>
+        <text class="tag {{item.type === 'lend' ? 'tag-warn' : 'tag-success'}}">×{{item.qty}}</text>
+      </view>
+      <text class="log-meta">{{item.person}} · {{item.time || ''}}</text>
+    </view>
+  </block>
+</view>

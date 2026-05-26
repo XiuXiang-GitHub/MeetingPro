@@ -1,0 +1,31 @@
+/* 数据报表 */
+.page { padding: 0; padding-bottom: 140rpx; }
+
+/* 标签切换 */
+.tab-bar { display: flex; margin: 12rpx 24rpx; background: #FFFFFF; border-radius: 100rpx; padding: 6rpx; box-shadow: 0 1rpx 6rpx rgba(44,51,40,0.04); }
+.tab-item {
+  flex: 1; text-align: center; padding: 14rpx 0;
+  font-size: 26rpx; color: #6B7265; font-weight: 500;
+  border-radius: 100rpx;
+  transition: all 180ms ease;
+}
+.tab-item.active { background: #8C9E7A; color: #FFFFFF; font-weight: 600; box-shadow: 0 2rpx 8rpx rgba(140,158,122,0.30); }
+
+.section-title { font-size: 28rpx; font-weight: 700; color: #2C3328; display: block; margin-bottom: 16rpx; }
+.stat-num { font-size: 48rpx; font-weight: 300; color: #8C9E7A; line-height: 1; letter-spacing: -1rpx; }
+.text-sm { font-size: 24rpx; color: #6B7265; }
+
+/* 收入汇总 */
+.revenue-total { font-size: 56rpx; font-weight: 300; color: #2C3328; display: block; margin: 20rpx 0; line-height: 1; letter-spacing: -2rpx; }
+
+/* 使用率排行 */
+.usage-row { display: flex; align-items: center; padding: 14rpx 0; gap: 12rpx; }
+.usage-bar {
+  flex: 1; height: 12rpx; background: #E8E5DF; border-radius: 6rpx; overflow: hidden;
+}
+.usage-fill { height: 100%; background: linear-gradient(90deg, #A8B89A, #8C9E7A); border-radius: 6rpx; }
+.usage-label { font-size: 24rpx; color: #1A1A1A; width: 140rpx; flex-shrink: 0; font-weight: 500; }
+.usage-pct { font-size: 24rpx; color: #6B7265; width: 60rpx; text-align: right; flex-shrink: 0; font-weight: 600; }
+
+/* 人员效率 */
+.staff-role { font-size: 22rpx; color: #9EA395; margin-top: 4rpx; }

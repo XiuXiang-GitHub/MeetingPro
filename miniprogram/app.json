@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/layout/editor/index",
+    "pages/layout/history/index",
+    "pages/scheduling/calendar/index",
+    "pages/scheduling/staff-list/index",
+    "pages/scheduling/staff-detail/index",
+    "pages/scheduling/dispatch/index",
+    "pages/schedule/calendar/index",
+    "pages/schedule/booking/index",
+    "pages/materials/inventory/index",
+    "pages/materials/records/index",
+    "pages/checklist/list/index",
+    "pages/checklist/detail/index",
+    "pages/report/index/index",
+    "pages/more/index"
+  ],
+  "window": {
+    "backgroundColor": "#FAF9F6",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "MeetingPro",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#9EA395",
+    "selectedColor": "#8C9E7A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabbar/home.png",
+        "selectedIconPath": "images/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/layout/editor/index",
+        "text": "摆台",
+        "iconPath": "images/tabbar/layout.png",
+        "selectedIconPath": "images/tabbar/layout-active.png"
+      },
+      {
+        "pagePath": "pages/scheduling/calendar/index",
+        "text": "调度",
+        "iconPath": "images/tabbar/schedule.png",
+        "selectedIconPath": "images/tabbar/schedule-active.png"
+      },
+      {
+        "pagePath": "pages/more/index",
+        "text": "更多",
+        "iconPath": "images/tabbar/more.png",
+        "selectedIconPath": "images/tabbar/more-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

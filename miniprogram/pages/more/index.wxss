@@ -1,0 +1,24 @@
+/* 更多 — 功能网格 */
+.page { padding: 28rpx 8rpx; }
+.grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.grid-item {
+  width: 330rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 24rpx;
+  margin: 0 0 24rpx 0;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(44,51,40,0.04);
+  transition: transform 140ms ease;
+}
+.grid-item:active { transform: scale(0.97); }
+.grid-icon {
+  width: 88rpx; height: 88rpx; border-radius: 20rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44rpx; margin-bottom: 16rpx;
+}
+.grid-title { font-size: 28rpx; font-weight: 700; color: #2C3328; margin-bottom: 6rpx; }
+.grid-desc { font-size: 22rpx; color: #9EA395; text-align: center; }

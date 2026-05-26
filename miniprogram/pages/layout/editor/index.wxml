@@ -1,0 +1,94 @@
+<!-- 摆台编辑器 — 全屏画布优先 -->
+<view class="editor-page">
+  <!-- 全屏画布 -->
+  <movable-area class="canvas" style="width:{{canvasWidth}}rpx;height:{{canvasHeight}}rpx">
+    <view class="grid-bg" style="width:{{canvasWidth}}rpx;height:{{canvasHeight}}rpx">
+    </view>
+    <movable-view
+      wx:for="{{furnitureList}}" wx:key="id"
+      class="furniture {{selectedId === item.id ? 'selected' : ''}}"
+      x="{{item.x}}" y="{{item.y}}" direction="all"
+      data-id="{{item.id}}"
+      bindtap="onSelectItem" bindchange="onChange" bindtouchend="onTouchEnd"
+      style="width:{{item.w}}rpx;height:{{item.h}}rpx"
+    >
+      <view class="furniture-inner" style="background:{{item.color}};border-radius:{{item.borderRadius}};transform:rotate({{item.rotation}}deg)">
+        <view class="furniture-label-inner">{{item.name}}</view>
+      </view>
+    </movable-view>
+  </movable-area>
+
+  <!-- 顶部浮动栏 -->
+  <view class="top-bar">
+    <input class="name-input" value="{{layoutName}}" bindinput="onNameInput" />
+    <view class="icon-btn" bindtap="onToggleLibrary">库</view>
+    <view class="icon-btn" bindtap="onUndo">↩</view>
+    <view class="icon-btn primary" bindtap="onSave">保存</view>
+  </view>
+
+  <!-- 底部浮动栏 -->
+  <view class="bottom-bar">
+    <text class="stat-text">{{stats.totalSeats}}座 · {{stats.totalItems}}件</text>
+    <view class="btn-mini" bindtap="onMaterialChecklist">物料</view>
+    <view class="btn-mini" bindtap="onClear">清空</view>
+	    <view class="btn-mini" bindtap="onNew">初始</view>
+    <view class="btn-mini" bindtap="onHistory">历史</view>
+  </view>
+
+  <!-- 选中浮动操作 -->
+  <view wx:if="{{selectedId}}" class="float-actions">
+    <text class="float-info">{{selectedInfo}}</text>
+    <view class="float-btns">
+      <view class="icon-btn" bindtap="onRotate">↻</view>
+      <view class="icon-btn" bindtap="onCopy">+</view>
+      <view class="icon-btn danger" bindtap="onDelete">✕</view>
+    </view>
+  </view>
+
+  <!-- 左侧抽屉库 -->
+  <view wx:if="{{showLibrary}}" class="drawer-mask" bindtap="onToggleLibrary">
+    <view class="drawer-panel" catchtap="">
+      <view class="drawer-title">家具库</view>
+      <block wx:for="{{flatGroups}}" wx:key="label" wx:for-item="group">
+        <view class="group-label">{{group.label}}</view>
+        <view class="furniture-grid">
+          <view class="furniture-item" wx:for="{{group.items}}" wx:for-item="type" wx:key="key" bindtap="onSelectFurniture" data-type="{{type.key}}">
+            <view class="furniture-preview" style="background:{{type.color}};border-radius:{{type.borderRadius}};width:{{type.previewW}}rpx;height:{{type.previewH}}rpx">
+              <text wx:if="{{typeCounts[type.key]}}" class="type-count">{{typeCounts[type.key]}}</text>
+            </view>
+            <text class="furniture-label">{{type.name}}</text>
+          </view>
+        </view>
+      </block>
+      <view class="drawer-title" style="margin-top:24rpx">模板</view>
+      <view class="template-list">
+        <view class="template-item" wx:for="{{templateOptions}}" wx:key="key" bindtap="onSelectTemplate" data-key="{{item.key}}">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 间距警告浮层 -->
+  <view wx:if="{{spacingWarnings.length > 0}}" class="warning-float">
+    <text>{{spacingWarnings.length}}处间距过近</text>
+  </view>
+
+  <!-- 物料弹窗 -->
+  <view wx:if="{{showMaterialModal}}" class="modal-mask" bindtap="onCloseMaterial">
+    <view class="modal-sheet" catchtap="">
+      <view class="modal-handle"></view>
+      <view class="flex-between" style="margin-bottom:24rpx">
+        <text class="modal-title">物料清单</text>
+        <text bindtap="onCloseMaterial">关闭</text>
+      </view>
+      <view wx:if="{{materialList.length === 0}}" class="empty-state" style="padding:40rpx">
+        <view class="empty-state-text">暂无物料</view>
+      </view>
+      <view wx:else class="material-list">
+        <view class="material-row flex-between" wx:for="{{materialList}}" wx:key="name">
+          <text>{{item.name}}</text>
+          <text>× {{item.qty}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

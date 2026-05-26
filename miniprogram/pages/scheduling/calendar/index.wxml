@@ -1,0 +1,44 @@
+<!-- 排班周历 -->
+<view class="page">
+  <!-- 周导航 -->
+  <view class="week-nav">
+    <view class="nav-btn" bindtap="weekNav" data-dir="prev"><text>‹</text></view>
+    <text class="week-label">{{currentWeekStart}} — {{days[6].dateStr}}</text>
+    <view class="nav-btn" bindtap="weekNav" data-dir="next"><text>›</text></view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <button class="btn btn-primary" bindtap="onAddDispatch">+ 添加排班</button>
+    <button class="btn btn-secondary" bindtap="onBorrow">借调申请</button>
+    <button class="btn btn-ghost" bindtap="onShowStaff">员工列表</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty-state"><view class="empty-state-text">加载中...</view></view>
+
+  <block wx:else>
+    <!-- 星期表头 -->
+    <view class="day-header-row">
+      <view class="day-header-cell {{day.isToday ? 'today' : ''}}" wx:for="{{days}}" wx:key="dateStr">
+        <text class="day-label">{{day.label}}</text>
+        <text class="day-num">{{day.day}}</text>
+      </view>
+    </view>
+
+    <!-- 按场地分组 -->
+    <view class="room-sections">
+      <view class="room-section" wx:for="{{roomDays}}" wx:key="_id">
+        <view class="room-title">{{item.name}}</view>
+        <view class="room-grid">
+          <view class="room-day-cell {{cell.isToday ? 'cell-today' : ''}}" wx:for="{{item.dayCells}}" wx:for-item="cell" wx:key="dateStr">
+            <text class="cell-date">{{cell.day}}</text>
+            <block wx:if="{{cell.staff.length > 0}}">
+              <text class="staff-tag" wx:for="{{cell.staff}}" wx:for-item="s" wx:key="_id" bindlongpress="onDeleteDispatch" data-id="{{s._id}}" data-name="{{s.name}}">{{s.name}}</text>
+            </block>
+            <text wx:else class="no-staff">—</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

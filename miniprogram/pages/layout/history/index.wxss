@@ -1,0 +1,6 @@
+/* 历史方案 */
+.layout-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; }
+.layout-meta { font-size: 24rpx; color: #6B7265; margin-top: 6rpx; }
+.arrow { font-size: 36rpx; color: #9EA395; }
+.layout-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 14rpx; padding-top: 14rpx; border-top: 1rpx solid #F3F2EE; }
+.load-more { text-align: center; padding: 24rpx; font-size: 24rpx; color: #8C9E7A; font-weight: 600; }

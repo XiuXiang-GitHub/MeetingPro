@@ -1,0 +1,12 @@
+# Claude Code
+.claude/
+
+# WeChat private config (contains personal settings)
+project.private.config.json
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

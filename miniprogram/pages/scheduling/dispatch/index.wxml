@@ -1,0 +1,34 @@
+<!-- 排班 / 借调 -->
+<view class="page">
+  <view class="form-group">
+    <text class="form-label">{{dispatchType === 'borrow' ? '借调人员' : '排班人员'}}</text>
+    <picker value="{{0}}" range="{{staffList}}" range-key="name" bindchange="onStaffSelect">
+      <view class="input-field flex-row">{{form.staffName || '请选择人员'}}</view>
+    </picker>
+  </view>
+  <view class="form-group">
+    <text class="form-label">场地</text>
+    <picker value="{{roomIndex}}" range="{{roomList}}" range-key="name" bindchange="onRoomSelect">
+      <view class="input-field flex-row">{{roomList[roomIndex].name || '请选择场地'}}</view>
+    </picker>
+  </view>
+  <view class="form-group">
+    <text class="form-label">日期</text>
+    <picker mode="date" value="{{form.date}}" bindchange="onDateChange">
+      <view class="input-field flex-row">{{form.date || '请选择日期'}}</view>
+    </picker>
+  </view>
+  <view class="form-group">
+    <text class="form-label">时段</text>
+    <picker value="{{timeSlotIndex}}" range="{{timeSlots}}" bindchange="onTimeSlotSelect">
+      <view class="input-field flex-row">{{form.timeSlot || '请选择时段'}}</view>
+    </picker>
+  </view>
+  <view wx:if="{{dispatchType === 'borrow'}}" class="form-group">
+    <text class="form-label">借调原因</text>
+    <textarea class="input-field" style="height:160rpx;padding-top:16rpx" value="{{form.reason}}" bindinput="onInput" data-field="reason" placeholder="请说明借调原因" />
+  </view>
+  <view style="padding:48rpx">
+    <button class="btn btn-primary" bindtap="onSubmit">{{dispatchType === 'borrow' ? '提交借调' : '确认排班'}}</button>
+  </view>
+</view>

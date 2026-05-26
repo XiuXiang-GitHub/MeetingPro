@@ -1,0 +1,13 @@
+/* 领用归还记录 */
+.log-label { font-size: 28rpx; font-weight: 600; color: #1A1A1A; }
+.log-meta { font-size: 24rpx; color: #6B7265; margin-top: 6rpx; display: block; }
+
+.record-filter { display: flex; gap: 12rpx; padding: 16rpx 24rpx; }
+.record-filter .filter-tag {
+  padding: 8rpx 20rpx; border-radius: 100rpx; font-size: 24rpx; font-weight: 500;
+  background: #FFFFFF; border: 1rpx solid #E8E5DF; color: #6B7265;
+}
+.record-filter .filter-tag.active {
+  background: #8C9E7A; color: #FFFFFF; border-color: #8C9E7A;
+  box-shadow: 0 2rpx 8rpx rgba(140,158,122,0.25);
+}
