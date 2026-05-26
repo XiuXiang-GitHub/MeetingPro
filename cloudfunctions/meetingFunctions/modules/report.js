@@ -1,4 +1,45 @@
 // 数据报表模块
+
+// 首页仪表盘 — 一次调用返回所有聚合数据
+exports.dashboard = async (data, { db }) => {
+  const { today } = data || {};
+  const month = today ? today.slice(0, 7) : "";
+
+  const [bookingResult, dispatchResult, materialResult, revenueResult] = await Promise.all([
+    db.collection("bookings").where({ date: today }).get().catch(() => ({ data: [] })),
+    db.collection("dispatches").where({ date: today }).get().catch(() => ({ data: [] })),
+    db.collection("materials").get().catch(() => ({ data: [] })),
+    month
+      ? db.collection("revenues").where({ month }).get().catch(() => ({ data: [] }))
+      : Promise.resolve({ data: [] }),
+  ]);
+
+  var allBookings = bookingResult.data || [];
+  var allMats = materialResult.data || [];
+  var revenueRecords = revenueResult.data || [];
+
+  var lowStock = [];
+  for (var j = 0; j < allMats.length; j++) {
+    if (allMats[j].stock < allMats[j].minStock) {
+      lowStock.push(allMats[j]);
+    }
+  }
+  var monthlyTotal = 0;
+  for (var k = 0; k < revenueRecords.length; k++) {
+    monthlyTotal += revenueRecords[k].amount || 0;
+  }
+
+  return {
+    success: true,
+    data: {
+      todayBookings: allBookings,
+      todayDispatches: dispatchResult.data || [],
+      lowStockItems: lowStock,
+      monthlyRevenue: monthlyTotal,
+    },
+  };
+};
+
 exports.roomUsage = async (data, { db }) => {
   const { month } = data; // "2026-05"
   const regexp = `^${month}`;

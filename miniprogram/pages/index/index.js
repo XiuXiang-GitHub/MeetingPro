@@ -28,23 +28,13 @@ Page({
     return m + "月" + day + "日 星期" + w;
   },
   async loadDashboard() {
-    var that = this;
     var today = this.getToday();
     this.setData({ currentDate: this.formatDateLabel() });
     try {
-      var results = await Promise.all([
-        wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "booking.list", data: { startDate: today, endDate: today } } }),
-        wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "staff.dispatchList", data: { startDate: today, endDate: today } } }),
-        wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "material.list" } }),
-        wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "report.revenue", data: { month: today.slice(0, 7) } } }),
-      ]);
+      var res = await wx.cloud.callFunction({ name: "meetingFunctions", data: { action: "report.dashboard", data: { today: today } } });
+      var d = (res.result && res.result.data) || {};
 
-      var bookingsRes = results[0];
-      var dispatchesRes = results[1];
-      var materialsRes = results[2];
-      var revenueRes = results[3];
-
-      var allBookings = (bookingsRes.result && bookingsRes.result.data) || [];
+      var allBookings = d.todayBookings || [];
       var now = new Date();
       var urgent = [];
       for (var i = 0; i < allBookings.length; i++) {
@@ -60,20 +50,12 @@ Page({
         }
       }
 
-      var allMats = (materialsRes.result && materialsRes.result.data) || [];
-      var lowStock = [];
-      for (var j = 0; j < allMats.length; j++) {
-        if (allMats[j].stock < allMats[j].minStock) {
-          lowStock.push(allMats[j]);
-        }
-      }
-
       this.setData({
         todayBookings: allBookings,
         urgentBookings: urgent,
-        todayDispatches: (dispatchesRes.result && dispatchesRes.result.data) || [],
-        lowStockItems: lowStock,
-        monthlyRevenue: (revenueRes.result && revenueRes.result.data && revenueRes.result.data.total) || 0,
+        todayDispatches: d.todayDispatches || [],
+        lowStockItems: d.lowStockItems || [],
+        monthlyRevenue: d.monthlyRevenue || 0,
         loading: false,
       });
     } catch (e) {
