@@ -14,20 +14,7 @@ const modules = {
   report: require("./modules/report"),
 };
 
-var inited = false;
-
 exports.main = async (event, context) => {
-  // 仅首次冷启动时初始化数据库集合（后续预热调用跳过）
-  if (!inited) {
-    inited = true;
-    try {
-      await db.collection("_init").doc("init").get();
-    } catch (e) {
-      try { await modules.dbInit.init({}, { db, _, cloud }); } catch (e2) {}
-      try { await db.collection("_init").add({ data: { _id: "init", done: true } }); } catch (e3) {}
-    }
-  }
-
   const { action, data } = event;
   var parts = (action || "").split(".");
   var module = parts[0];
